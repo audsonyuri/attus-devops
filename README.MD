@@ -40,7 +40,7 @@ O projeto está dividido em duas partes principais:
 
 3. Construa e inicie os containers:
 
-   `docker-compose up --build`
+   `docker-compose up --build -d`
 
 
 ## Uso

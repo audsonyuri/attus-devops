@@ -43,6 +43,7 @@ jobs:
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
 
   deploy-to-ecs:
     runs-on: ubuntu-latest
@@ -71,12 +72,14 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.ecr-login.outputs.registry }}
         ECR_REPOSITORY: ${{ secrets.AWS_PROD_BACK_ECR_REPOSITORY }}
-        IMAGE_TAG: ${{ github.sha }}
         CLUSTER_NAME: ${{ secrets.AWS_PROD_ECS_CLUSTER }}
         SERVICE_NAME: ${{ secrets.AWS_PROD_BACK_ECS_SERVICE }}
         CONTAINER_NAME: attus-backend
       run: |
-        aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --force-new-deployment --region ${{ secrets.AWS_PROD_REGION }}
+        TASK_DEFINITION=$(aws ecs describe-task-definition --task-definition $SERVICE_NAME --region ${{ secrets.AWS_PROD_REGION }} --query 'taskDefinition' --output json)
+        NEW_TASK_DEFINITION=$(echo $TASK_DEFINITION | jq --arg IMAGE "$ECR_REGISTRY/$ECR_REPOSITORY:latest" '.containerDefinitions[0].image = $IMAGE')
+        aws ecs register-task-definition --region ${{ secrets.AWS_PROD_REGION }} --family $SERVICE_NAME --container-definitions "$(echo $NEW_TASK_DEFINITION | jq '.containerDefinitions')" --task-role-arn "$(echo $TASK_DEFINITION | jq -r '.taskRoleArn')" --execution-role-arn "$(echo $TASK_DEFINITION | jq -r '.executionRoleArn')" --network-mode "$(echo $TASK_DEFINITION | jq -r '.networkMode')" --cpu "$(echo $TASK_DEFINITION | jq -r '.cpu')" --memory "$(echo $TASK_DEFINITION | jq -r '.memory')"
+        aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --task-definition $SERVICE_NAME --force-new-deployment --region ${{ secrets.AWS_PROD_REGION }}
 
     - name: Verify ECS deployment
       env:
