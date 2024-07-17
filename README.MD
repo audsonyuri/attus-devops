@@ -2,7 +2,7 @@
 
 ## Tecnologias Utilizadas
 
-- Frontend: React.js
+- Frontend: Vue
 - Backend: Spring Boot (Java 17)
 - Containerização: Docker
 
@@ -10,7 +10,7 @@
 
 O projeto está dividido em duas partes principais:
 
-- `/teste-front`: Contém o código fonte da aplicação React.js
+- `/teste-front`: Contém o código fonte da aplicação Vue
 - `/teste-back`: Contém o código fonte da API Spring Boot
 
 ## Pré-requisitos
@@ -24,11 +24,8 @@ O projeto está dividido em duas partes principais:
 - Node.js (versão 14 ou superior)
 - npm (geralmente vem com Node.js)
 - Maven
-- IDE de sua preferência (recomendamos IntelliJ IDEA para backend e VSCode para frontend)
+- IDE de sua preferência (recomendo IntelliJ IDEA para backend e VSCode para frontend)
 - Git
-
-### Opcional:
-- PostgreSQL (para desenvolvimento local sem Docker)
 
 ## Configuração e Instalação
 
