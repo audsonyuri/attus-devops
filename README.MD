@@ -34,7 +34,7 @@ O projeto está dividido em duas partes principais:
 
 1. Clone o repositório:
 
-   git clone https://github.com/audsonyuri/attus-teste.git
+   git clone https://github.com/audsonyuri/attus-devops.git
    cd attus-teste
 
 
