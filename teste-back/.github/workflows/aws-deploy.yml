@@ -1,4 +1,4 @@
-name: AWS CD Pipeline Backend
+name: AWS CICD Pipeline Backend
 
 on:
   pull_request:
@@ -98,5 +98,3 @@ jobs:
         done
         echo "Deployment failed"
         exit 1
-
-

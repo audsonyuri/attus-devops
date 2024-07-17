@@ -1,7 +1,7 @@
-name: CI/CD Pipeline
+name: AWS CICD Pipeline Frontend
 
 on:
-  push:
+  pull_request:
     branches:
       - main
 
@@ -97,7 +97,4 @@ jobs:
           fi
         done
         echo "Deployment failed"
-        exit 1
-  
-  
-  
+        exit 1 
