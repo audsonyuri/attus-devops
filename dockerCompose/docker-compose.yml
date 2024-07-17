@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ../teste-front
+      dockerfile: ../teste-front/Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ../teste-back
+      dockerfile: ../teste-back/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/attus-db
+      - SPRING_DATASOURCE_USERNAME=user-attus
+      - SPRING_DATASOURCE_PASSWORD=password-attus
+    networks:
+      - app-network
+
+  database:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=attus-db
+      - POSTGRES_USER=user-attus
+      - POSTGRES_PASSWORD=password-attus
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
