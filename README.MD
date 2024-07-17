@@ -1,4 +1,4 @@
-ATTUS TESTE DEVOPS YURI.ROZENDO
+# ATTUS DEVOPS YURI.ROZENDO
 
 ## Tecnologias Utilizadas
 
@@ -34,13 +34,13 @@ O projeto está dividido em duas partes principais:
 
 1. Clone o repositório:
 
-   git clone https://github.com/audsonyuri/attus-devops.git
-   cd attus-teste
-
+   `git clone https://github.com/audsonyuri/attus-devops.git`
+   
+   `cd attus-devops`
 
 3. Construa e inicie os containers:
 
-   docker-compose up --build
+   `docker-compose up --build`
 
 
 ## Uso
@@ -72,11 +72,11 @@ Para desenvolver o backend:
 
 1. Construa as imagens Docker:
    
-   docker-compose build
+   `docker-compose build`
    
 2. Inicie os serviços:
    
-   docker-compose up -d
+   `docker-compose up -d`
    
 
 ## CI/CD Pipeline
